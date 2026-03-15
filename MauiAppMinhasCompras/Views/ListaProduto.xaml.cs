@@ -52,8 +52,30 @@ public partial class ListaProduto : ContentPage
 		DisplayAlert("Total dos Produtos", msg, "OK");
     }
 
-    private void MenuItem_Clicked(object sender, EventArgs e)
+    private async void MenuItem_Clicked(object sender, EventArgs e)
     {
+        try
+        {
+            MenuItem menu = sender as MenuItem;
+            Produto produtoSelecionado = menu.BindingContext as Produto;
 
+            bool confirm = await DisplayAlert(
+                "Remover Produto",
+                $"Deseja remover {produtoSelecionado.Descricao}?",
+                "Sim",
+                "Não"
+            );
+
+            if (confirm)
+            {
+                await App.Db.Delete(produtoSelecionado.Id);
+
+                lista.Remove(produtoSelecionado);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
+        }
     }
 }
