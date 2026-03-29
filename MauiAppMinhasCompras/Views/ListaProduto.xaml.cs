@@ -139,4 +139,9 @@ public partial class ListaProduto : ContentPage
             lst_produtos.IsRefreshing = false;
         }
     }
+
+    private async void ToolbarItem_Clicked_2(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Relatorio());
+    }
 }
